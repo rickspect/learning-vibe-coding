@@ -2,6 +2,7 @@ import { Elysia, t } from "elysia";
 
 import { db } from "./db/client";
 import { todos } from "./db/schema";
+import { usersRoute } from "./routes/users-route";
 
 const port = Number(Bun.env.PORT ?? 3000);
 
@@ -31,6 +32,7 @@ const app = new Elysia()
       }),
     },
   )
+  .use(usersRoute)
   .listen(port);
 
 console.log(`Server running at http://${app.server?.hostname}:${app.server?.port}`);

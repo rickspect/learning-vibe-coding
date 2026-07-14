@@ -42,12 +42,23 @@ Backend sederhana menggunakan Bun, ElysiaJS, Drizzle, dan MySQL.
 - `GET /health` untuk memastikan server berjalan.
 - `GET /todos` untuk membaca contoh data dari MySQL.
 - `POST /todos` untuk membuat contoh data baru.
+- `POST /api/users` untuk registrasi user baru.
 
 Contoh body untuk `POST /todos`:
 
 ```json
 {
   "title": "Hello from Elysia"
+}
+```
+
+Contoh body untuk `POST /api/users`:
+
+```json
+{
+  "name": "Eko",
+  "email": "eko@localhost",
+  "password": "rahasia"
 }
 ```
 
