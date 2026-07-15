@@ -3,11 +3,43 @@ import { Elysia, t } from "elysia";
 import {
   EmailAlreadyRegisteredError,
   InvalidLoginError,
+  UnauthorizedError,
+  getCurrentUser,
   loginUser,
   registerUser,
 } from "../services/users-service";
 
+function getBearerToken(authorization: string | undefined) {
+  const [type, token] = authorization?.split(" ") ?? [];
+
+  if (type !== "Bearer" || !token) {
+    throw new UnauthorizedError();
+  }
+
+  return token;
+}
+
 export const usersRoute = new Elysia({ prefix: "/api/users" })
+  .get("/current", async ({ headers, set }) => {
+    try {
+      const token = getBearerToken(headers.authorization);
+      const user = await getCurrentUser(token);
+
+      return {
+        data: user,
+      };
+    } catch (error) {
+      if (error instanceof UnauthorizedError) {
+        set.status = 401;
+
+        return {
+          error: error.message,
+        };
+      }
+
+      throw error;
+    }
+  })
   .post(
     "/",
     async ({ body, set }) => {

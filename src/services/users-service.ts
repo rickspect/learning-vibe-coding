@@ -27,6 +27,12 @@ export class InvalidLoginError extends Error {
   }
 }
 
+export class UnauthorizedError extends Error {
+  constructor() {
+    super("Unauthorized");
+  }
+}
+
 export async function registerUser(input: RegisterUserInput) {
   const existingUsers = await db
     .select({ id: users.id })
@@ -77,4 +83,31 @@ export async function loginUser(input: LoginUserInput) {
   });
 
   return token;
+}
+
+export async function getCurrentUser(token: string) {
+  const foundUsers = await db
+    .select({
+      id: users.id,
+      name: users.name,
+      email: users.email,
+      createdAt: users.createdAt,
+    })
+    .from(sessions)
+    .innerJoin(users, eq(sessions.userId, users.id))
+    .where(eq(sessions.token, token))
+    .limit(1);
+
+  const user = foundUsers[0];
+
+  if (!user) {
+    throw new UnauthorizedError();
+  }
+
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    created_at: user.createdAt,
+  };
 }
