@@ -44,6 +44,7 @@ Backend sederhana menggunakan Bun, ElysiaJS, Drizzle, dan MySQL.
 - `POST /todos` untuk membuat contoh data baru.
 - `POST /api/users` untuk registrasi user baru.
 - `POST /api/users/login` untuk login user dan membuat session token.
+- `GET /api/users/current` untuk mengambil data user dari session token.
 
 Contoh body untuk `POST /todos`:
 
@@ -70,6 +71,12 @@ Contoh body untuk `POST /api/users/login`:
   "email": "eko@localhost",
   "password": "rahasia"
 }
+```
+
+Contoh header untuk `GET /api/users/current`:
+
+```http
+Authorization: Bearer <token>
 ```
 
 ## Script
