@@ -15,6 +15,13 @@
       "when": 1784037482685,
       "tag": "0001_even_bug",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1784121876607,
+      "tag": "0002_closed_shape",
+      "breakpoints": true
     }
   ]
 }
