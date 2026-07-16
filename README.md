@@ -45,6 +45,7 @@ Backend sederhana menggunakan Bun, ElysiaJS, Drizzle, dan MySQL.
 - `POST /api/users` untuk registrasi user baru.
 - `POST /api/users/login` untuk login user dan membuat session token.
 - `GET /api/users/current` untuk mengambil data user dari session token.
+- `DELETE /api/users/logout` untuk logout user dan menghapus session token.
 
 Contoh body untuk `POST /todos`:
 
@@ -74,6 +75,12 @@ Contoh body untuk `POST /api/users/login`:
 ```
 
 Contoh header untuk `GET /api/users/current`:
+
+```http
+Authorization: Bearer <token>
+```
+
+Contoh header untuk `DELETE /api/users/logout`:
 
 ```http
 Authorization: Bearer <token>
