@@ -90,6 +90,30 @@ describe("GET /health", () => {
   });
 });
 
+describe("Swagger documentation", () => {
+  it("serves Swagger UI", async () => {
+    const response = await request("/swagger");
+    const body = await response.text();
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get("content-type")).toContain("text/html");
+    expect(body).toContain("Learning Vibe Coding API");
+  });
+
+  it("serves OpenAPI JSON with available API paths", async () => {
+    const { response, body } = await requestJson("/swagger/json");
+
+    expect(response.status).toBe(200);
+    expect(body.info.title).toBe("Learning Vibe Coding API");
+    expect(body.paths).toHaveProperty("/health");
+    expect(body.paths).toHaveProperty("/todos");
+    expect(body.paths).toHaveProperty("/api/users");
+    expect(body.paths).toHaveProperty("/api/users/login");
+    expect(body.paths).toHaveProperty("/api/users/current");
+    expect(body.paths).toHaveProperty("/api/users/logout");
+  });
+});
+
 describe("todos API", () => {
   it("creates a todo", async () => {
     const { response, body } = await requestJson(

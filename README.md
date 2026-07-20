@@ -95,6 +95,20 @@ Tabel session login user.
 | `user_id` | integer | Foreign key ke `users.id` |
 | `created_at` | timestamp | Default current timestamp |
 
+## Swagger
+
+Dokumentasi interaktif API tersedia melalui Swagger UI:
+
+```http
+GET /swagger
+```
+
+OpenAPI JSON tersedia di:
+
+```http
+GET /swagger/json
+```
+
 ## API yang Tersedia
 
 ### `GET /health`
