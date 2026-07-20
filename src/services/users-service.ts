@@ -33,6 +33,7 @@ export class UnauthorizedError extends Error {
   }
 }
 
+// Registers a new user after ensuring the email is unique and hashing the password.
 export async function registerUser(input: RegisterUserInput) {
   const existingUsers = await db
     .select({ id: users.id })
@@ -53,6 +54,7 @@ export async function registerUser(input: RegisterUserInput) {
   });
 }
 
+// Authenticates a user and stores a new session token when the credentials are valid.
 export async function loginUser(input: LoginUserInput) {
   const foundUsers = await db
     .select({
@@ -85,6 +87,7 @@ export async function loginUser(input: LoginUserInput) {
   return token;
 }
 
+// Returns the user linked to a valid session token without exposing the password.
 export async function getCurrentUser(token: string) {
   const foundUsers = await db
     .select({
@@ -112,6 +115,7 @@ export async function getCurrentUser(token: string) {
   };
 }
 
+// Deletes an existing session token so it can no longer be used for authenticated requests.
 export async function logoutUser(token: string) {
   const foundSessions = await db
     .select({ id: sessions.id })
